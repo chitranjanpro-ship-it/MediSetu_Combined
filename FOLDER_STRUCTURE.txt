@@ -1,0 +1,60 @@
+================================================================================
+                    MEDISETU COMBINED - FOLDER STRUCTURE
+================================================================================
+
+MediSetu_Combined/
+│
+├── Navigation_Versions/
+│   └── Templates/
+│       ├── nav_version1_basic.html      (6 links: Home, About, Register, Login, Contact, Partner)
+│       ├── nav_version2_extended.html  (10 links: + Customer, Doctor, Vendor, Delivery, Logistics)
+│       └── nav_version3_combined.html  (11 links: All links combined)
+│
+├── Pages_Version1/
+│   └── (Pages with Basic Navigation - 6 links)
+│
+├── Pages_Version2/
+│   └── (Pages with Extended Navigation - 10 links)
+│
+├── Pages_Version3/
+│   └── (Pages with Combined Navigation - 11 links)
+│
+└── Combined_Pages/
+    └── (Final combined pages ready for deployment)
+
+================================================================================
+📋 PURPOSE OF EACH FOLDER:
+================================================================================
+
+Navigation_Versions/
+  → Contains navigation templates and documentation
+  → Use these templates to apply navigation to pages
+
+Pages_Version1/
+  → Copy pages here that use Basic Navigation (6 links)
+  → Good for: Home, Register, Login, About, Contact
+
+Pages_Version2/
+  → Copy pages here that use Extended Navigation (10 links)
+  → Good for: Dashboard pages, Admin pages
+
+Pages_Version3/
+  → Copy pages here that use Combined Navigation (11 links)
+  → Good for: Main hub pages, Navigation hub
+
+Combined_Pages/
+  → Final versions of pages ready to use
+  → These are the pages you'll actually deploy
+
+================================================================================
+🚀 NEXT STEPS:
+================================================================================
+
+1. Copy original pages from MediSetu_Web_Prototype
+2. Apply appropriate navigation version to each
+3. Organize into version folders
+4. Create final combined versions in Combined_Pages
+5. Test and deploy
+
+================================================================================
+

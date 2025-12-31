@@ -1,0 +1,400 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendor Dashboard - MediSetu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">MediSetu</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="partner.html">Partner</a></li>
+        
+        <!-- Dashboard Links -->
+        <li class="nav-item"><a class="nav-link" href="customer.html">Customer</a></li>
+        <li class="nav-item"><a class="nav-link" href="doctor.html">Doctor</a></li>
+        <li class="nav-item"><a class="nav-link" href="vendor.html" class="active">Vendor</a></li>
+        <li class="nav-item"><a class="nav-link" href="delivery.html">Delivery</a></li>
+        <li class="nav-item"><a class="nav-link" href="logistics.html">Logistics</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container py-5">
+  <h2 class="mb-4 text-center">Pharmacy / Vendor Dashboard</h2>
+  <div id="welcomeMsg" class="alert alert-info text-center"></div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Inventory Management</h5>
+          <p>Add, update stock, manage expiry dates of medicines.</p>
+          <button class="btn btn-warning" onclick="showInventoryModal()">Manage Inventory</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Orders Dashboard</h5>
+          <p>View new orders and accept/reject them.</p>
+          <button class="btn btn-warning" onclick="showOrdersModal()">View Orders</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Delivery Assignment</h5>
+          <p>Assign orders to local delivery boys or 3rd party.</p>
+          <button class="btn btn-warning" onclick="showDeliveryModal()">Assign Delivery</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Settlements & Disputes</h5>
+          <p>Manage payments, returns, and issues.</p>
+          <button class="btn btn-warning" onclick="showSettlementsModal()">Manage</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Inventory Modal -->
+<div class="modal fade" id="inventoryModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Inventory Management</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="inventoryForm" class="mb-4">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Medicine Name</label>
+              <input type="text" class="form-control" id="medName" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Quantity</label>
+              <input type="number" class="form-control" id="medQuantity" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Price</label>
+              <input type="number" class="form-control" id="medPrice" required>
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Expiry Date</label>
+              <input type="date" class="form-control" id="medExpiry" required>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-warning">Add to Inventory</button>
+        </form>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Medicine</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Expiry</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Orders Modal -->
+<div class="modal fade" id="ordersModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Orders Dashboard</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Items</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="vendorOrdersTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delivery Assignment Modal -->
+<div class="modal fade" id="deliveryModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assign Delivery</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Select Order</label>
+          <select class="form-select" id="deliveryOrder">
+            <option value="">--Select Order--</option>
+            <option value="1">Order #1 - Rajesh Kumar</option>
+            <option value="2">Order #2 - Priya Sharma</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Delivery Partner</label>
+          <select class="form-select" id="deliveryPartner">
+            <option value="">--Select Partner--</option>
+            <option value="local">Local Delivery Boy</option>
+            <option value="third">3rd Party Logistics</option>
+          </select>
+        </div>
+        <button class="btn btn-warning w-100" onclick="assignDelivery()">Assign Delivery</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Settlements Modal -->
+<div class="modal fade" id="settlementsModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Settlements & Disputes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Transaction ID</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="settlementsTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3">
+  &copy; 2025 MediSetu. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (currentUser.name) {
+    document.getElementById('welcomeMsg').textContent = `Welcome, ${currentUser.name}!`;
+  }
+  loadInventory();
+  loadVendorOrders();
+  loadSettlements();
+});
+
+function showInventoryModal() {
+  const modal = new bootstrap.Modal(document.getElementById('inventoryModal'));
+  loadInventory();
+  modal.show();
+}
+
+function loadInventory() {
+  const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+  const tbody = document.getElementById('inventoryTableBody');
+  tbody.innerHTML = '';
+  
+  if (inventory.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" class="text-center">No items in inventory. Add some medicines.</td></tr>';
+    return;
+  }
+  
+  inventory.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${item.name}</td>
+      <td>${item.quantity}</td>
+      <td>₹${item.price}</td>
+      <td>${new Date(item.expiry).toLocaleDateString()}</td>
+      <td><button class="btn btn-sm btn-danger" onclick="removeInventory(${item.id})">Remove</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('inventoryForm')?.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+  inventory.push({
+    id: inventory.length + 1,
+    name: document.getElementById('medName').value,
+    quantity: document.getElementById('medQuantity').value,
+    price: document.getElementById('medPrice').value,
+    expiry: document.getElementById('medExpiry').value
+  });
+  localStorage.setItem('inventory', JSON.stringify(inventory));
+  alert('Medicine added to inventory!');
+  loadInventory();
+  this.reset();
+});
+
+function removeInventory(id) {
+  if (confirm('Remove this item from inventory?')) {
+    const inventory = JSON.parse(localStorage.getItem('inventory')) || [];
+    const filtered = inventory.filter(item => item.id !== id);
+    localStorage.setItem('inventory', JSON.stringify(filtered));
+    loadInventory();
+  }
+}
+
+function showOrdersModal() {
+  const modal = new bootstrap.Modal(document.getElementById('ordersModal'));
+  loadVendorOrders();
+  modal.show();
+}
+
+function loadVendorOrders() {
+  const orders = JSON.parse(localStorage.getItem('orders')) || [];
+  const tbody = document.getElementById('vendorOrdersTableBody');
+  tbody.innerHTML = '';
+  
+  if (orders.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="6" class="text-center">No orders yet.</td></tr>';
+    return;
+  }
+  
+  orders.forEach(order => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>#${order.id}</td>
+      <td>${order.customer || 'Customer'}</td>
+      <td>${order.items}</td>
+      <td>${order.total}</td>
+      <td><span class="badge bg-${order.status === 'Pending' ? 'warning' : 'success'}">${order.status}</span></td>
+      <td>
+        ${order.status === 'Pending' ? `
+          <button class="btn btn-sm btn-success" onclick="acceptOrder(${order.id})">Accept</button>
+          <button class="btn btn-sm btn-danger" onclick="rejectOrder(${order.id})">Reject</button>
+        ` : '<span class="text-muted">Processed</span>'}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function acceptOrder(id) {
+  const orders = JSON.parse(localStorage.getItem('orders')) || [];
+  const order = orders.find(o => o.id === id);
+  if (order) {
+    order.status = 'Accepted';
+    localStorage.setItem('orders', JSON.stringify(orders));
+    loadVendorOrders();
+    alert('Order accepted!');
+  }
+}
+
+function rejectOrder(id) {
+  if (confirm('Reject this order?')) {
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const order = orders.find(o => o.id === id);
+    if (order) {
+      order.status = 'Rejected';
+      localStorage.setItem('orders', JSON.stringify(orders));
+      loadVendorOrders();
+    }
+  }
+}
+
+function showDeliveryModal() {
+  const modal = new bootstrap.Modal(document.getElementById('deliveryModal'));
+  modal.show();
+}
+
+function assignDelivery() {
+  const order = document.getElementById('deliveryOrder').value;
+  const partner = document.getElementById('deliveryPartner').value;
+  
+  if (!order || !partner) {
+    alert('Please select both order and delivery partner');
+    return;
+  }
+  
+  alert(`Delivery assigned successfully!\nOrder: #${order}\nPartner: ${partner}`);
+  bootstrap.Modal.getInstance(document.getElementById('deliveryModal')).hide();
+}
+
+function showSettlementsModal() {
+  const modal = new bootstrap.Modal(document.getElementById('settlementsModal'));
+  loadSettlements();
+  modal.show();
+}
+
+function loadSettlements() {
+  const settlements = [
+    { id: 1, date: '2025-01-15', amount: '₹2500', type: 'Payment', status: 'Completed' },
+    { id: 2, date: '2025-01-14', amount: '₹1800', type: 'Return', status: 'Pending' }
+  ];
+  
+  const tbody = document.getElementById('settlementsTableBody');
+  tbody.innerHTML = '';
+  settlements.forEach(s => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>#${s.id}</td>
+      <td>${new Date(s.date).toLocaleDateString()}</td>
+      <td>${s.amount}</td>
+      <td>${s.type}</td>
+      <td><span class="badge bg-${s.status === 'Completed' ? 'success' : 'warning'}">${s.status}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+</script>
+</body>
+</html>
