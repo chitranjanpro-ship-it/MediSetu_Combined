@@ -1,0 +1,272 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Dashboard - MediSetu</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container">
+    <a class="navbar-brand" href="index.html">MediSetu</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html">Register</a></li>
+        <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="partner.html">Partner</a></li>
+        
+        <!-- Dashboard Links -->
+        <li class="nav-item"><a class="nav-link" href="customer.html">Customer</a></li>
+        <li class="nav-item"><a class="nav-link" href="doctor.html">Doctor</a></li>
+        <li class="nav-item"><a class="nav-link" href="vendor.html">Vendor</a></li>
+        <li class="nav-item"><a class="nav-link" href="delivery.html" class="active">Delivery</a></li>
+        <li class="nav-item"><a class="nav-link" href="logistics.html">Logistics</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class="container py-5">
+  <h2 class="mb-4 text-center">Delivery Partner Dashboard</h2>
+  <div id="welcomeMsg" class="alert alert-info text-center"></div>
+
+  <div class="row g-4">
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Assigned Orders</h5>
+          <p>View orders assigned to you for delivery.</p>
+          <button class="btn btn-info" onclick="showOrdersModal()">View Orders</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Delivery Tracking</h5>
+          <p>Update status of delivery in real-time.</p>
+          <button class="btn btn-info" onclick="showTrackingModal()">Update Status</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Notifications</h5>
+          <p>Receive notifications for new assignments.</p>
+          <button class="btn btn-info" onclick="showNotificationsModal()">View Notifications</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Orders Modal -->
+<div class="modal fade" id="ordersModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Assigned Orders</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="deliveryOrdersTableBody">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tracking Modal -->
+<div class="modal fade" id="trackingModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Delivery Status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Select Order</label>
+          <select class="form-select" id="trackingOrder">
+            <option value="">--Select Order--</option>
+            <option value="1">Order #1 - Rajesh Kumar</option>
+            <option value="2">Order #2 - Priya Sharma</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Update Status</label>
+          <select class="form-select" id="trackingStatus">
+            <option value="">--Select Status--</option>
+            <option value="Picked Up">Picked Up</option>
+            <option value="In Transit">In Transit</option>
+            <option value="Out for Delivery">Out for Delivery</option>
+            <option value="Delivered">Delivered</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Notes (Optional)</label>
+          <textarea class="form-control" id="trackingNotes" rows="3"></textarea>
+        </div>
+        <button class="btn btn-info w-100" onclick="updateDeliveryStatus()">Update Status</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Notifications Modal -->
+<div class="modal fade" id="notificationsModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notifications</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <div id="notificationsList">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="bg-dark text-white text-center py-3">
+  &copy; 2025 MediSetu. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/script.js"></script>
+<script>
+const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+
+document.addEventListener('DOMContentLoaded', function() {
+  if (currentUser.name) {
+    document.getElementById('welcomeMsg').textContent = `Welcome, ${currentUser.name}!`;
+  }
+  loadDeliveryOrders();
+  loadNotifications();
+});
+
+function showOrdersModal() {
+  const modal = new bootstrap.Modal(document.getElementById('ordersModal'));
+  loadDeliveryOrders();
+  modal.show();
+}
+
+function loadDeliveryOrders() {
+  const orders = [
+    { id: 1, customer: 'Rajesh Kumar', address: '123 Main St, City', phone: '9876543210', status: 'Assigned' },
+    { id: 2, customer: 'Priya Sharma', address: '456 Park Ave, City', phone: '9876543211', status: 'In Transit' },
+    { id: 3, customer: 'Amit Patel', address: '789 Oak Rd, City', phone: '9876543212', status: 'Delivered' }
+  ];
+  
+  const tbody = document.getElementById('deliveryOrdersTableBody');
+  tbody.innerHTML = '';
+  orders.forEach(order => {
+    const tr = document.createElement('tr');
+    const statusClass = order.status === 'Delivered' ? 'success' : order.status === 'In Transit' ? 'warning' : 'info';
+    tr.innerHTML = `
+      <td>#${order.id}</td>
+      <td>${order.customer}</td>
+      <td>${order.address}</td>
+      <td>${order.phone}</td>
+      <td><span class="badge bg-${statusClass}">${order.status}</span></td>
+      <td><button class="btn btn-sm btn-info" onclick="viewOrderDetails(${order.id})">View Details</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function viewOrderDetails(id) {
+  alert(`Order #${id} Details:\n\nView full order details, customer information, and delivery instructions.`);
+}
+
+function showTrackingModal() {
+  const modal = new bootstrap.Modal(document.getElementById('trackingModal'));
+  modal.show();
+}
+
+function updateDeliveryStatus() {
+  const order = document.getElementById('trackingOrder').value;
+  const status = document.getElementById('trackingStatus').value;
+  const notes = document.getElementById('trackingNotes').value;
+  
+  if (!order || !status) {
+    alert('Please select order and status');
+    return;
+  }
+  
+  alert(`Delivery status updated successfully!\nOrder: #${order}\nStatus: ${status}`);
+  bootstrap.Modal.getInstance(document.getElementById('trackingModal')).hide();
+  document.getElementById('trackingOrder').value = '';
+  document.getElementById('trackingStatus').value = '';
+  document.getElementById('trackingNotes').value = '';
+}
+
+function showNotificationsModal() {
+  const modal = new bootstrap.Modal(document.getElementById('notificationsModal'));
+  loadNotifications();
+  modal.show();
+}
+
+function loadNotifications() {
+  const notifications = [
+    { id: 1, message: 'New order #4 assigned to you', time: '2 hours ago', read: false },
+    { id: 2, message: 'Order #1 delivery completed', time: '5 hours ago', read: true },
+    { id: 3, message: 'Reminder: Order #2 is pending', time: '1 day ago', read: false }
+  ];
+  
+  const listDiv = document.getElementById('notificationsList');
+  listDiv.innerHTML = '';
+  
+  if (notifications.length === 0) {
+    listDiv.innerHTML = '<p class="text-muted text-center">No notifications</p>';
+    return;
+  }
+  
+  notifications.forEach(notif => {
+    const div = document.createElement('div');
+    div.className = `alert alert-${notif.read ? 'secondary' : 'info'} mb-2`;
+    div.innerHTML = `
+      <div class="d-flex justify-content-between">
+        <div>
+          <strong>${notif.message}</strong>
+          <br><small class="text-muted">${notif.time}</small>
+        </div>
+        ${!notif.read ? '<button class="btn btn-sm btn-outline-primary" onclick="markAsRead(' + notif.id + ')">Mark Read</button>' : ''}
+      </div>
+    `;
+    listDiv.appendChild(div);
+  });
+}
+
+function markAsRead(id) {
+  alert('Notification marked as read!');
+  loadNotifications();
+}
+</script>
+</body>
+</html>
